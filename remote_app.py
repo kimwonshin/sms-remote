@@ -19,8 +19,10 @@ class App:
         self.stop = threading.Event()
         self.busy, self.last_report = False, None
         window.title("SMS 원격 수어 분석")
-        window.geometry("900x780")
-        window.minsize(760, 640)
+        width = min(900, window.winfo_screenwidth() - 80)
+        height = min(780, window.winfo_screenheight() - 100)
+        window.geometry(f"{width}x{height}")
+        window.minsize(min(760, width), min(640, height))
         pane = ttk.Frame(window, padding=20)
         pane.pack(fill="both", expand=True)
         ttk.Label(pane, text="노트북 촬영 → GPU 서버 분석 → 보고서 받기", font=("맑은 고딕", 18, "bold")).pack(anchor="w")
