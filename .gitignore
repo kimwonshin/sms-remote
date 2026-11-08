@@ -1,0 +1,11 @@
+.venv*/
+__pycache__/
+*.pyc
+client-config.json
+known_hosts*
+recordings/
+results/
+*.pem
+*.key
+id_*
+*.zip

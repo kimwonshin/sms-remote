@@ -1,0 +1,8 @@
+{
+  "host": "gpu-server.example.com",
+  "port": 22,
+  "username": "your-user",
+  "server_python": "/usr/bin/python3",
+  "server_script": "/path/to/workspace/sms-demo/sms-remote/server.py",
+  "key_filename": ""
+}
