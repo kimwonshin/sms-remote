@@ -9,10 +9,14 @@ from unittest.mock import patch
 import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from remote_client import safe_extract, sha256, run_job, ConfirmHostKey
+from remote_client import safe_extract, sha256, run_job, ConfirmHostKey,valid_model_ids
 
 
 class TransportTests(unittest.TestCase):
+    def test_catalog_ids_and_aliases_accept_no_paths_or_shell_commands(self):
+        self.assertTrue(valid_model_ids(['native75','priority12-tcn-md-j100-all-seed123']))
+        for values in ([],['../a'],['/tmp/model'],['tcn;id'],['$(id)'],['a']*101):
+            self.assertFalse(valid_model_ids(values))
     def archive(self, root, names):
         archive = root / "test.zip"
         with zipfile.ZipFile(archive, "w") as bundle:
