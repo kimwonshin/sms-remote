@@ -21,6 +21,11 @@ import paramiko
 ROOT = Path(__file__).resolve().parent
 EXTRACTORS = ("dwpose", "hybrid", "rtmw", "mediapipe", "rtmw-hand", "rtmdet-hand")
 MODELS = ("tcn", "bilstm", "stgcn")
+MODEL_PRESETS = ('legacy','native75','all','release')
+
+
+def valid_model_ids(values):
+    return bool(values) and len(values)<=100 and all(isinstance(v,str) and re.fullmatch(r'[a-z0-9][a-z0-9_.-]{0,159}',v) for v in values)
 
 
 def fingerprint(key):
@@ -210,7 +215,7 @@ def run_job(config, *, video=None, extractors=("rtmw",), models=("tcn",),
         video = Path(video).resolve()
         if not video.is_file():
             raise FileNotFoundError(video)
-        if any(x not in EXTRACTORS for x in extractors) or any(x not in MODELS for x in models) or not extractors or not models:
+        if any(x not in EXTRACTORS for x in extractors) or not valid_model_ids(models) or not extractors:
             raise ValueError("추출기와 수어 모델을 선택하세요.")
         local = Path(config.get("results_dir", str(ROOT / "results"))).expanduser().resolve() / uuid.uuid4().hex
         local.mkdir(parents=True)
@@ -279,8 +284,9 @@ def main():
     source.add_argument("--video", type=Path)
     source.add_argument("--camera", type=int)
     source.add_argument("--resume", type=Path)
-    parser.add_argument("--extractors", nargs="+", choices=EXTRACTORS, default=["rtmw"])
-    parser.add_argument("--models", nargs="+", choices=MODELS, default=["tcn"])
+    parser.add_argument("--extractors", nargs="+", choices=EXTRACTORS, default=["mediapipe"])
+    parser.add_argument("--models", nargs="+", default=["release"], help='Model IDs or legacy/native75/all/release')
+    source.add_argument('--list-models',action='store_true',help='Fetch the server model catalog without submitting video')
     parser.add_argument("--password", action="store_true", help="SSH 비밀번호를 저장하지 않고 입력")
     parser.add_argument("--open-report", action="store_true")
     args = parser.parse_args()
@@ -293,9 +299,15 @@ def main():
             return
     def confirm(host, value):
         return input(f"새 서버 {host}\n지문 {value}\n서버에서 확인한 지문과 같습니까? [yes/no] ").strip().lower() == "yes"
+    password=getpass.getpass('SSH 비밀번호: ') if args.password else None
+    if args.list_models:
+        connection=Connection(config,password=password,confirm_host=confirm)
+        try:print(json.dumps(connection.command('info'),ensure_ascii=False,indent=2))
+        finally:connection.close()
+        return
     result = run_job(config, video=video, timing=timing, resume=args.resume,
                      extractors=args.extractors, models=args.models,
-                     password=getpass.getpass("SSH 비밀번호: ") if args.password else None,
+                     password=password,
                      confirm_host=confirm)
     print(result)
     if args.open_report:

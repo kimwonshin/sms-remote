@@ -9,7 +9,10 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 import webbrowser
 
-from remote_client import ROOT, EXTRACTORS, MODELS, load_config, run_job, save_json
+from remote_client import ROOT, EXTRACTORS, MODELS, load_config, run_job, save_json, Connection
+
+PRESETS={'연동 TCN (15fps)':('release',),'기존 3개 (30fps)':('legacy',),
+         '완료 75개 (15fps)':('native75',),'전체 78개':('all',),'목록에서 직접 선택':()}
 
 
 class App:
@@ -67,13 +70,21 @@ class App:
         labels = dict(dwpose="DWPose-L", hybrid="hybrid", rtmw="RTMW-x 384", mediapipe="MediaPipe (CPU)",
                       **{"rtmw-hand": "RTMW + Hand", "rtmdet-hand": "RTMDet-Hand"})
         for i, name in enumerate(EXTRACTORS):
-            value = tk.BooleanVar(value=name == "rtmw")
+            value = tk.BooleanVar(value=name == "mediapipe")
             self.extractors[name] = value
             ttk.Checkbutton(choices, text=labels[name], variable=value).grid(row=i//3, column=i%3, sticky="w", padx=8)
-        for i, name in enumerate(MODELS):
-            value = tk.BooleanVar(value=name == "tcn")
-            self.models[name] = value
-            ttk.Checkbutton(choices, text=name.upper(), variable=value).grid(row=2, column=i, sticky="w", padx=8, pady=(8, 0))
+        self.model_group=tk.StringVar(value='연동 TCN (15fps)')
+        ttk.Combobox(choices,textvariable=self.model_group,values=tuple(PRESETS),state='readonly',width=27).grid(row=2,column=0,columnspan=2,sticky='w',padx=8,pady=6)
+        ttk.Button(choices,text='서버 모델 목록 불러오기',command=self.fetch_catalog).grid(row=2,column=2)
+        model_frame=ttk.Frame(choices)
+        model_frame.grid(row=3,column=0,columnspan=3,sticky='ew',padx=8)
+        self.model_list=tk.Listbox(model_frame,selectmode='extended',exportselection=False,height=5)
+        self.model_list.pack(side='left',fill='both',expand=True)
+        scroll=ttk.Scrollbar(model_frame,orient='vertical',command=self.model_list.yview)
+        scroll.pack(side='right',fill='y');self.model_list.configure(yscrollcommand=scroll.set)
+        self.catalog_ids=[]
+        self.model_list.bind('<<ListboxSelect>>',lambda event:self.model_group.set('목록에서 직접 선택') if self.model_list.curselection() else None)
+        ttk.Label(choices,text='75개 모델은 MediaPipe·DWPose 직접 15fps 입력을 사용합니다. Ctrl/Shift로 여러 모델을 선택할 수 있습니다.').grid(row=4,column=0,columnspan=3,sticky='w',padx=8)
         actions = ttk.Frame(pane)
         actions.pack(fill="x", pady=12)
         self.start_button = ttk.Button(actions, text="촬영·전송·분석 시작", command=self.start)
@@ -95,6 +106,29 @@ class App:
 
     def notify(self, text):
         self.events.put(("log", str(text)))
+
+    def fetch_catalog(self):
+        if self.busy:return
+        try:
+            config=dict(self.config)
+            config.update({key:value.get().strip() for key,value in self.fields.items()})
+            save_json(self.config_path,config)
+            config=load_config(self.config_path)
+        except Exception as error:
+            messagebox.showerror('연결 설정',str(error));return
+        password,passphrase=self.password.get(),self.passphrase.get()
+        self.password.set('');self.passphrase.set('')
+        self.busy=True;self.start_button.configure(state='disabled');self.resume_button.configure(state='disabled')
+        def work():
+            connection=None
+            try:
+                connection=Connection(config,password=password,key_passphrase=passphrase,confirm_host=self.confirm_host)
+                self.events.put(('catalog',connection.command('info').get('model_catalog',[])))
+            except Exception as error:self.events.put(('error',str(error)))
+            finally:
+                if connection:connection.close()
+                self.events.put(('idle',None))
+        threading.Thread(target=work,daemon=True).start()
 
     def confirm_host(self, host, fingerprint):
         response, ready = [], threading.Event()
@@ -123,7 +157,9 @@ class App:
             save_json(self.config_path, config)
             config = load_config(self.config_path)
             names = [name for name, value in self.extractors.items() if value.get()]
-            models = [name for name, value in self.models.items() if value.get()]
+            models=list(PRESETS[self.model_group.get()])
+            if self.model_group.get()=='목록에서 직접 선택':
+                models=[self.catalog_ids[i] for i in self.model_list.curselection()]
             mode, video, camera = self.mode.get(), self.video.get(), int(self.camera.get())
             if not resume and (not names or not models):
                 raise ValueError("추출기와 수어 모델을 각각 하나 이상 선택하세요.")
@@ -179,6 +215,13 @@ class App:
                     self.last_report = Path(payload)
                     self.open_button.configure(state="normal")
                     self.open_report()
+                elif kind=='catalog':
+                    self.model_list.delete(0,'end');self.catalog_ids=[]
+                    for row in payload:
+                        self.catalog_ids.append(row['id'])
+                        caution=' [이전 WORD ID 기준]' if row.get('affected_by_ambiguous_word_ids') else ''
+                        self.model_list.insert('end',row.get('title',row['id'])+caution)
+                    self.notify(f'서버 모델 {len(payload)}개를 불러왔습니다.')
                 elif kind == "idle":
                     self.busy = False
                     self.start_button.configure(state="normal")

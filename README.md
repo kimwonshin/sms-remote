@@ -1,5 +1,22 @@
 # SMS 원격 수어 분석 — 노트북 프로그램
 
+## 완료 모델 75개와 기존 모델 비교
+
+서버에 기존 30fps 3개와 직접 15fps 학습 완료 모델 75개, 총 **78개**를 등록할 수 있습니다. 모델 목록 불러오기로 서버의 ID·구조·seed·학습 조합을 조회하고 Ctrl/Shift로 개별 모델을 선택합니다. `연동 TCN`, `기존 3개`, `완료 75개`, `전체 78개` 묶음도 선택할 수 있습니다.
+
+새 75개는 MediaPipe 또는 DWPose의 **직접 15fps** 입력으로 실행합니다. 같은 영상에서 기존 모델용 30fps 추출과 별도로 수행하며, 30fps 추출 결과를 단순히 절반으로 줄이지 않습니다. 혼합 요청에서 RTMW 등 계약이 맞지 않는 새 모델 조합은 보고서에 제외 사유를 기록합니다. 새 모델만 선택했다면 MediaPipe 또는 DWPose를 선택하세요. 기본 선택은 MediaPipe와 연동용 TCN입니다.
+
+```bash
+python remote_client.py --list-models --password
+python remote_client.py --video sentence.mp4 --extractors mediapipe dwpose --models native75 --password --open-report
+python remote_client.py --video sentence.mp4 --extractors mediapipe --models all --password --open-report
+python remote_client.py --video sentence.mp4 --extractors mediapipe --models priority12-tcn-md-j100-all-seed123 --password
+```
+
+`native75`는 초기 12회와 추가 63회의 완료 체크포인트를 그대로 참조합니다. 진행 중인 새 60회 실험은 이 목록에 섞지 않습니다. 과거 W63 단어 공동학습 9개에는 현재 제외된 WORD0946·1637·2317·2318이 포함돼 있으므로 목록과 보고서에 이전 기준 표시가 붙습니다. 과거 모델의 점수나 가중치를 새 기준으로 바꾸지 않습니다.
+
+반환 보고서는 순서 있는 gloss, confidence, 질문 여부, 프레임 수, 보정 상태와 checkpoint 식별자를 제공합니다. 정답 없는 촬영 영상의 정확도를 만들어 표시하지 않으며, 기존 AIHub 보정값이 실카메라에서도 검증된 확률이라는 의미는 아닙니다.
+
 노트북에서는 **웹캠 녹화와 영상 전송만** 합니다. GPU 컴퓨터에서 키포인트와 문장 모델을 실행하고, 비교 보고서·결과 영상·좌표·예측 JSON을 다시 노트북에 저장합니다. 노트북에 Torch·MediaPipe·가중치를 설치할 필요가 없습니다.
 
 ## Windows에서 시작
@@ -24,7 +41,7 @@ ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub -E sha256
 
 30fps, 640×480을 요청하며 최대 60초를 촬영합니다. 실제 수집 속도가 27fps 미만이면 분석을 중단하고 촬영 원본은 보존합니다. 화면 미리보기만 좌우 반전하며 서버 입력 영상은 반전하지 않습니다. `r`은 다시 촬영, `q`/ESC는 취소입니다. 미리 녹화한 MP4·AVI 파일도 선택할 수 있습니다. 영상 한 개를 문장 하나로 처리합니다.
 
-기본 분석은 RTMW-x 384×288 + TCN입니다. 복수 선택으로 DWPose-L·hybrid·RTMW·MediaPipe 및 TCN·BiLSTM·ST-GCN을 비교할 수 있습니다. **MediaPipe 키포인트 추출은 서버 CPU**, 나머지 ONNX 추출과 모든 문장 모델 추론은 서버 GPU를 사용합니다.
+기본 분석은 MediaPipe 직접 15fps + 연동 TCN입니다. 기존 30fps 모델은 DWPose-L·hybrid·RTMW·MediaPipe 등으로 비교할 수 있으며, 새 75개 모델은 MediaPipe·DWPose를 사용합니다. **MediaPipe 키포인트 추출은 서버 CPU**, 나머지 ONNX 추출과 모든 문장 모델 추론은 서버 GPU를 사용합니다.
 
 모델 결과는 순서가 있는 gloss와 confidence·질문 판별입니다. 별도의 자연어 문장 생성은 하지 않습니다. 정답 없이 측정한 손 검출률은 인식 정확도가 아니며, confidence 보정과 입력 도메인의 검토 상태는 보고서에 그대로 표시됩니다.
 
