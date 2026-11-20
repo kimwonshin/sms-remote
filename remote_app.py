@@ -9,10 +9,10 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 import webbrowser
 
-from remote_client import ROOT, EXTRACTORS, MODELS, load_config, run_job, save_json, Connection
+from remote_client import ROOT, EXTRACTORS, load_config, run_job, save_json, Connection
 
-PRESETS={'연동 TCN (15fps)':('release',),'기존 3개 (30fps)':('legacy',),
-         '완료 75개 (15fps)':('native75',),'전체 78개':('all',),'목록에서 직접 선택':()}
+PRESETS={'추천 통합 BiLSTM (98라벨)':('release',),'기존 후보 10개 (문장50)':('old10',),
+         '신규 10개 (통합98·응급50)':('new10',),'전체 20개':('all',),'목록에서 직접 선택':()}
 
 
 class App:
@@ -73,7 +73,7 @@ class App:
             value = tk.BooleanVar(value=name == "mediapipe")
             self.extractors[name] = value
             ttk.Checkbutton(choices, text=labels[name], variable=value).grid(row=i//3, column=i%3, sticky="w", padx=8)
-        self.model_group=tk.StringVar(value='연동 TCN (15fps)')
+        self.model_group=tk.StringVar(value='추천 통합 BiLSTM (98라벨)')
         ttk.Combobox(choices,textvariable=self.model_group,values=tuple(PRESETS),state='readonly',width=27).grid(row=2,column=0,columnspan=2,sticky='w',padx=8,pady=6)
         ttk.Button(choices,text='서버 모델 목록 불러오기',command=self.fetch_catalog).grid(row=2,column=2)
         model_frame=ttk.Frame(choices)
@@ -84,7 +84,7 @@ class App:
         scroll.pack(side='right',fill='y');self.model_list.configure(yscrollcommand=scroll.set)
         self.catalog_ids=[]
         self.model_list.bind('<<ListboxSelect>>',lambda event:self.model_group.set('목록에서 직접 선택') if self.model_list.curselection() else None)
-        ttk.Label(choices,text='75개 모델은 MediaPipe·DWPose 직접 15fps 입력을 사용합니다. Ctrl/Shift로 여러 모델을 선택할 수 있습니다.').grid(row=4,column=0,columnspan=3,sticky='w',padx=8)
+        ttk.Label(choices,text='20개 모델은 MediaPipe·DWPose 직접 15fps 입력입니다. 기존 S50·통합 U98·응급 전용 E50을 구분하세요.').grid(row=4,column=0,columnspan=3,sticky='w',padx=8)
         actions = ttk.Frame(pane)
         actions.pack(fill="x", pady=12)
         self.start_button = ttk.Button(actions, text="촬영·전송·분석 시작", command=self.start)

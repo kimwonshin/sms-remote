@@ -1,21 +1,24 @@
 # SMS 원격 수어 분석 — 노트북 프로그램
 
-## 완료 모델 75개와 기존 모델 비교
+## 원격 테스트 모델 20개
 
-서버에 기존 30fps 3개와 직접 15fps 학습 완료 모델 75개, 총 **78개**를 등록할 수 있습니다. 모델 목록 불러오기로 서버의 ID·구조·seed·학습 조합을 조회하고 Ctrl/Shift로 개별 모델을 선택합니다. `연동 TCN`, `기존 3개`, `완료 75개`, `전체 78개` 묶음도 선택할 수 있습니다.
+기존 75개 중 선정한 **후보 10개**와 새로 완료한 **10개**, 총 20개를 비교합니다. 기본 선택은 **통합 98라벨 BiLSTM seed2026**입니다. `추천 통합 BiLSTM`, `기존 후보 10개`, `신규 10개`, `전체 20개` 묶음 또는 서버 목록의 개별 모델을 선택하세요.
 
-새 75개는 MediaPipe 또는 DWPose의 **직접 15fps** 입력으로 실행합니다. 같은 영상에서 기존 모델용 30fps 추출과 별도로 수행하며, 30fps 추출 결과를 단순히 절반으로 줄이지 않습니다. 혼합 요청에서 RTMW 등 계약이 맞지 않는 새 모델 조합은 보고서에 제외 사유를 기록합니다. 새 모델만 선택했다면 MediaPipe 또는 DWPose를 선택하세요. 기본 선택은 MediaPipe와 연동용 TCN입니다.
+모든 활성 모델은 MediaPipe 또는 DWPose **직접 15fps** 입력입니다. 기존 S50은 문장 50어휘, 신규 U98은 문장+응급 단어 통합 98어휘, 신규 E50 대조군은 응급 단어 전용 50어휘입니다. E50은 문장 번역 모델이 아니며, 기존 모델의 단어 보조 헤드는 응급 단어 Gloss 출력에 사용되지 않습니다.
 
 ```bash
 python remote_client.py --list-models --password
-python remote_client.py --video sentence.mp4 --extractors mediapipe dwpose --models native75 --password --open-report
-python remote_client.py --video sentence.mp4 --extractors mediapipe --models all --password --open-report
-python remote_client.py --video sentence.mp4 --extractors mediapipe --models priority12-tcn-md-j100-all-seed123 --password
+python remote_client.py --video sentence.mp4 --extractors mediapipe dwpose --models new10 --password --open-report
+python remote_client.py --video sentence.mp4 --extractors mediapipe --models old10 --password --open-report
+python remote_client.py --video sentence.mp4 --extractors mediapipe dwpose --models all --password --open-report
+python remote_client.py --video sentence.mp4 --extractors mediapipe --models release --password --open-report
 ```
 
-`native75`는 초기 12회와 추가 63회의 완료 체크포인트를 그대로 참조합니다. 진행 중인 새 60회 실험은 이 목록에 섞지 않습니다. 과거 W63 단어 공동학습 9개에는 현재 제외된 WORD0946·1637·2317·2318이 포함돼 있으므로 목록과 보고서에 이전 기준 표시가 붙습니다. 과거 모델의 점수나 가중치를 새 기준으로 바꾸지 않습니다.
+`all`/`native20`은 20개, `old10`과 `new10`은 각각 10개, `release`는 추천 통합 BiLSTM 1개입니다. 이전 `native75`/`legacy` 묶음과 제외된 개별 ID는 더 이상 활성 목록에서 실행하지 않습니다. 모델 가중치와 원래 학습 결과는 서버에 보존합니다. 목록·선정 근거는 [MODEL_CATALOG.md](MODEL_CATALOG.md), 고정 ID는 [model_selection.json](model_selection.json), 완료 Test 결과는 [benchmark.csv](benchmark.csv)에 있습니다.
 
-반환 보고서는 순서 있는 gloss, confidence, 질문 여부, 프레임 수, 보정 상태와 checkpoint 식별자를 제공합니다. 정답 없는 촬영 영상의 정확도를 만들어 표시하지 않으며, 기존 AIHub 보정값이 실카메라에서도 검증된 확률이라는 의미는 아닙니다.
+클라이언트와 sms-my 서버를 함께 업데이트하세요. 기존 `client-config.json`·SSH 키·녹화본·반환 결과는 유지합니다. 가중치는 클라이언트에 받지 않습니다. 실제 모델 목록은 서버의 `--list-models` 응답을 기준으로 확인합니다.
+
+반환 보고서는 순서 있는 Gloss, confidence, 질문 여부, 입력 프레임 수, 보정 상태와 모델의 출력 어휘 범위를 제공합니다. 정답 없는 촬영 영상의 정확도를 만들어 표시하지 않습니다. AIHub REAL06 기준 confidence 보정이 전시장 카메라 환경에서도 검증된 확률을 뜻하지는 않습니다.
 
 노트북에서는 **웹캠 녹화와 영상 전송만** 합니다. GPU 컴퓨터에서 키포인트와 문장 모델을 실행하고, 비교 보고서·결과 영상·좌표·예측 JSON을 다시 노트북에 저장합니다. 노트북에 Torch·MediaPipe·가중치를 설치할 필요가 없습니다.
 
@@ -41,7 +44,7 @@ ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub -E sha256
 
 30fps, 640×480을 요청하며 최대 60초를 촬영합니다. 실제 수집 속도가 27fps 미만이면 분석을 중단하고 촬영 원본은 보존합니다. 화면 미리보기만 좌우 반전하며 서버 입력 영상은 반전하지 않습니다. `r`은 다시 촬영, `q`/ESC는 취소입니다. 미리 녹화한 MP4·AVI 파일도 선택할 수 있습니다. 영상 한 개를 문장 하나로 처리합니다.
 
-기본 분석은 MediaPipe 직접 15fps + 연동 TCN입니다. 기존 30fps 모델은 DWPose-L·hybrid·RTMW·MediaPipe 등으로 비교할 수 있으며, 새 75개 모델은 MediaPipe·DWPose를 사용합니다. **MediaPipe 키포인트 추출은 서버 CPU**, 나머지 ONNX 추출과 모든 문장 모델 추론은 서버 GPU를 사용합니다.
+기본 분석은 MediaPipe 직접 15fps + 통합 98라벨 BiLSTM입니다. 활성 20개는 MediaPipe·DWPose로 비교합니다. RTMW·hybrid·30fps는 현재 모델 목록의 입력 계약에 포함되지 않습니다. **MediaPipe 키포인트 추출은 서버 CPU**, 나머지 ONNX 추출과 모든 문장 모델 추론은 서버 GPU를 사용합니다.
 
 모델 결과는 순서가 있는 gloss와 confidence·질문 판별입니다. 별도의 자연어 문장 생성은 하지 않습니다. 정답 없이 측정한 손 검출률은 인식 정확도가 아니며, confidence 보정과 입력 도메인의 검토 상태는 보고서에 그대로 표시됩니다.
 
@@ -66,7 +69,7 @@ python -m pip install -r requirements.txt
 cp client-config.example.json client-config.json
 # client-config.json의 서버 주소·사용자·개인키 경로를 설정
 python remote_client.py --camera 0 --password --open-report
-python remote_client.py --video sentence.mp4 --extractors dwpose hybrid rtmw mediapipe --models tcn bilstm stgcn --password --open-report
+python remote_client.py --video sentence.mp4 --extractors mediapipe dwpose --models all --password --open-report
 python remote_client.py --resume results/작업번호/job.json --password --open-report
 python -m unittest discover -s tests -v
 ```
@@ -76,3 +79,7 @@ SSH 개인키를 사용하면 `--password`를 생략합니다. 암호화된 개�
 ## 서버 코드
 
 서버 코드는 별도로 [sms-my의 sms-demo/sms-remote](https://github.com/kimwonshin/sms-my/tree/main/sms-demo/sms-remote)에 있습니다. 서버 프로그램 경로 기본값은 `/path/to/workspace/sms-demo/sms-remote/server.py`입니다. 노트북에서 새 HTTP 포트를 열거나 모델을 설치할 필요가 없습니다.
+
+## 20개 구성 확인
+
+서버·클라이언트 검증 17개와 실제 영상의 MediaPipe/DWPose 40개 GPU 예측을 통과했습니다. 키포인트 추출·추론·보고서 ZIP 생성은 22.037초였으며 외부 네트워크 전송 시간은 포함하지 않습니다. 상세 기록은 [validation-catalog20.json](validation-catalog20.json)에 있습니다. 전시장 다인 환경 성능 시험은 포함하지 않습니다.

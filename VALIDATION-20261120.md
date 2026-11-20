@@ -1,5 +1,7 @@
 # 원격 모델 목록 검증 — 2026-11-20
 
+> 아래는 이전 구성의 검증 기록입니다. 현재 활성 20개 구성은 [MODEL_CATALOG.md](MODEL_CATALOG.md)와 [validation-catalog20.json](validation-catalog20.json)을 확인하세요.
+
 기존 30fps 모델 3개 + 초기 native15 12개 + 추가 native15 63개, 총 78개를 등록했다. 새 학습 60회는 등록 대상에 포함하지 않았다. W63 공동학습 9개에는 이전 WORD ID 기준 표시를 붙였다. checkpoint와 추출기별 calibration profile 해시를 검증했으며 가중치를 복사하거나 노트북으로 보내지 않았다.
 
 - 서버 단위 검증 8개, 클라이언트 7개, 총 15개 통과. 경로 입력 거부·목록 alias 확장·FPS 계약·모델 경로 비공개·업로드 해시·중복 제출·안전한 ZIP·재연결을 확인했다.

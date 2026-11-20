@@ -19,9 +19,8 @@ import zipfile
 import paramiko
 
 ROOT = Path(__file__).resolve().parent
-EXTRACTORS = ("dwpose", "hybrid", "rtmw", "mediapipe", "rtmw-hand", "rtmdet-hand")
-MODELS = ("tcn", "bilstm", "stgcn")
-MODEL_PRESETS = ('legacy','native75','all','release')
+EXTRACTORS = ("mediapipe", "dwpose")
+MODEL_PRESETS = ('old10','new10','native20','all','release')
 
 
 def valid_model_ids(values):
@@ -202,7 +201,7 @@ def transfer_progress(notify, label):
     return callback
 
 
-def run_job(config, *, video=None, extractors=("rtmw",), models=("tcn",),
+def run_job(config, *, video=None, extractors=("mediapipe",), models=("release",),
             timing=None, resume=None, password=None, key_passphrase=None,
             confirm_host=None, notify=print, stop_event=None, poll_seconds=3):
     if resume:
@@ -285,7 +284,7 @@ def main():
     source.add_argument("--camera", type=int)
     source.add_argument("--resume", type=Path)
     parser.add_argument("--extractors", nargs="+", choices=EXTRACTORS, default=["mediapipe"])
-    parser.add_argument("--models", nargs="+", default=["release"], help='Model IDs or legacy/native75/all/release')
+    parser.add_argument("--models", nargs="+", default=["release"], help='Model IDs or old10/new10/native20/all/release')
     source.add_argument('--list-models',action='store_true',help='Fetch the server model catalog without submitting video')
     parser.add_argument("--password", action="store_true", help="SSH 비밀번호를 저장하지 않고 입력")
     parser.add_argument("--open-report", action="store_true")
