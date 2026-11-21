@@ -9,10 +9,11 @@ import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 import webbrowser
 
-from remote_client import ROOT, EXTRACTORS, MODELS, load_config, run_job, save_json, Connection
+from remote_client import ROOT, EXTRACTORS, load_config, run_job, save_json, Connection
 
-PRESETS={'연동 TCN (15fps)':('release',),'기존 3개 (30fps)':('legacy',),
-         '완료 75개 (15fps)':('native75',),'전체 78개':('all',),'목록에서 직접 선택':()}
+PRESETS={'추천 결합 BiLSTM (98라벨)':('release',),'새 결합 12개 (98·97·74)':('domain12',),
+         '이전 통합 10개':('new10',),'기존 문장 10개':('old10',),'이전 20개':('native20',),
+         '전체 32개':('all',),'목록에서 직접 선택':()}
 
 
 class App:
@@ -67,13 +68,13 @@ class App:
         choices = ttk.LabelFrame(pane, text="3. 서버에서 실행할 분석", padding=10)
         choices.pack(fill="x")
         self.extractors, self.models = {}, {}
-        labels = dict(dwpose="DWPose-L", hybrid="hybrid", rtmw="RTMW-x 384", mediapipe="MediaPipe (CPU)",
+        labels = dict(dwpose="DWPose-L", hybrid="hybrid (미보정)", rtmw="RTMW-x 384 (미보정)", mediapipe="MediaPipe (CPU)",
                       **{"rtmw-hand": "RTMW + Hand", "rtmdet-hand": "RTMDet-Hand"})
         for i, name in enumerate(EXTRACTORS):
             value = tk.BooleanVar(value=name == "mediapipe")
             self.extractors[name] = value
             ttk.Checkbutton(choices, text=labels[name], variable=value).grid(row=i//3, column=i%3, sticky="w", padx=8)
-        self.model_group=tk.StringVar(value='연동 TCN (15fps)')
+        self.model_group=tk.StringVar(value='추천 결합 BiLSTM (98라벨)')
         ttk.Combobox(choices,textvariable=self.model_group,values=tuple(PRESETS),state='readonly',width=27).grid(row=2,column=0,columnspan=2,sticky='w',padx=8,pady=6)
         ttk.Button(choices,text='서버 모델 목록 불러오기',command=self.fetch_catalog).grid(row=2,column=2)
         model_frame=ttk.Frame(choices)
@@ -84,7 +85,7 @@ class App:
         scroll.pack(side='right',fill='y');self.model_list.configure(yscrollcommand=scroll.set)
         self.catalog_ids=[]
         self.model_list.bind('<<ListboxSelect>>',lambda event:self.model_group.set('목록에서 직접 선택') if self.model_list.curselection() else None)
-        ttk.Label(choices,text='75개 모델은 MediaPipe·DWPose 직접 15fps 입력을 사용합니다. Ctrl/Shift로 여러 모델을 선택할 수 있습니다.').grid(row=4,column=0,columnspan=3,sticky='w',padx=8)
+        ttk.Label(choices,text='직접15fps: MediaPipe·DWPose·hybrid·RTMW-x 384. hybrid/RTMW는 Gloss 비교용이며 confidence·질문은 미보정입니다.',wraplength=760,justify='left').grid(row=4,column=0,columnspan=3,sticky='w',padx=8)
         actions = ttk.Frame(pane)
         actions.pack(fill="x", pady=12)
         self.start_button = ttk.Button(actions, text="촬영·전송·분석 시작", command=self.start)

@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-20",
+  "models": 20,
+  "predictions": 40,
+  "groups": {
+    "previous10": 10,
+    "new10": 10
+  },
+  "scopes": {
+    "S50": 10,
+    "U98": 9,
+    "E50": 1
+  },
+  "processing_seconds": 22.037,
+  "extraction_checks": {
+    "mediapipe": {
+      "predictions": 20,
+      "input_frames": 55,
+      "model_frames": 55,
+      "device": "cuda",
+      "gpu_name": "NVIDIA GeForce RTX 2080 Ti"
+    },
+    "dwpose": {
+      "predictions": 20,
+      "input_frames": 55,
+      "model_frames": 55,
+      "device": "cuda",
+      "gpu_name": "NVIDIA GeForce RTX 2080 Ti"
+    }
+  },
+  "checkpoint_and_profile_hashes_verified": true,
+  "strict_checkpoint_load": true,
+  "archive_sha256_verified": true,
+  "archive_crc_verified": true,
+  "removed_ids_rejected": true,
+  "default_model": "u98-md-bilstm-wordx4-seed2026",
+  "unit_tests": {
+    "server": 10,
+    "client": 7
+  },
+  "scope": "Server worker GPU integration and catalog/client tests. Not a new accuracy or crowd benchmark; external laptop/SSH was not repeated in this catalog-only change."
+}

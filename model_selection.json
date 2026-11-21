@@ -1,0 +1,183 @@
+{
+  "schema": "sms-remote-selection-v1",
+  "selection_split": "REAL08",
+  "test_used_for_selection": false,
+  "policy": "Retain top 4 TCN / 3 BiLSTM / 2 ST-GCN on mean MediaPipe+DWPose REAL08 sentence WER, plus prior integration reference. Exclude old W63 ambiguous-WORDID runs. New 10 are the complete priority5h campaign, including E50-only control.",
+  "previous10": [
+    {
+      "id": "md-joint-e50-tcn-seed2026",
+      "campaign": "native15-extended-v1",
+      "mean_real08_sentence_wer": 0.004778672032193159,
+      "reason": "REAL08 WER ranked within architecture"
+    },
+    {
+      "id": "md-sentence-all-tcn-seed123",
+      "campaign": "native15-extended-v1",
+      "mean_real08_sentence_wer": 0.005734406438631791,
+      "reason": "REAL08 WER ranked within architecture"
+    },
+    {
+      "id": "md-sentence-tcn-seed2026",
+      "campaign": "native15-extended-v1",
+      "mean_real08_sentence_wer": 0.005734406438631791,
+      "reason": "REAL08 WER ranked within architecture"
+    },
+    {
+      "id": "md-sentence-unknown-tcn-seed123",
+      "campaign": "native15-extended-v1",
+      "mean_real08_sentence_wer": 0.0058853118712273635,
+      "reason": "REAL08 WER ranked within architecture"
+    },
+    {
+      "id": "md-joint-e50-bilstm-seed123",
+      "campaign": "native15-extended-v1",
+      "mean_real08_sentence_wer": 0.005935613682092555,
+      "reason": "REAL08 WER ranked within architecture"
+    },
+    {
+      "id": "md-sentence-all-bilstm-seed123",
+      "campaign": "native15-extended-v1",
+      "mean_real08_sentence_wer": 0.00613682092555332,
+      "reason": "REAL08 WER ranked within architecture"
+    },
+    {
+      "id": "md-joint-e50-bilstm-seed2026",
+      "campaign": "native15-extended-v1",
+      "mean_real08_sentence_wer": 0.00699195171026157,
+      "reason": "REAL08 WER ranked within architecture"
+    },
+    {
+      "id": "md-sentence-all-stgcn-seed2026",
+      "campaign": "native15-extended-v1",
+      "mean_real08_sentence_wer": 0.023340040241448694,
+      "reason": "REAL08 WER ranked within architecture"
+    },
+    {
+      "id": "md-joint-e50-stgcn-seed2026",
+      "campaign": "native15-extended-v1",
+      "mean_real08_sentence_wer": 0.02409456740442656,
+      "reason": "REAL08 WER ranked within architecture"
+    },
+    {
+      "id": "priority12-tcn-md-j100-all-seed123",
+      "campaign": "native15-training-v1",
+      "mean_real08_sentence_wer": 0.00920523138832998,
+      "reason": "previous integration reference"
+    }
+  ],
+  "new10": [
+    {
+      "id": "u98-md-tcn-wordx4-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "u98-md-tcn-wordx4-seed123",
+      "campaign": "runs"
+    },
+    {
+      "id": "u98-md-tcn-wordx4-seed2026",
+      "campaign": "priority5h"
+    },
+    {
+      "id": "u98-md-tcn-wordx1-seed42",
+      "campaign": "priority5h"
+    },
+    {
+      "id": "e50-md-tcn-wordx4-seed42",
+      "campaign": "priority5h"
+    },
+    {
+      "id": "u98-md-bilstm-wordx4-seed42",
+      "campaign": "priority5h"
+    },
+    {
+      "id": "u98-md-stgcn-wordx4-seed42",
+      "campaign": "priority5h"
+    },
+    {
+      "id": "u98-md-bilstm-wordx4-synth10-seed42",
+      "campaign": "priority5h"
+    },
+    {
+      "id": "u98-md-bilstm-wordx4-seed123",
+      "campaign": "priority5h"
+    },
+    {
+      "id": "u98-md-bilstm-wordx4-seed2026",
+      "campaign": "priority5h"
+    }
+  ],
+  "default": "domain-u98-bilstm-paired-m4-s10-w20-seed42",
+  "notes": [
+    "Previous models output S50 sentence CTC; auxiliary word heads do not extend the predicted Gloss vocabulary.",
+    "U98 merges S50 and E50 with two shared labels; 99 CTC outputs include blank.",
+    "E50-only control has 50 labels, 51 CTC outputs, and is not a sentence translator.",
+    "Combined-keypoint synth10 model has one seed; selected non-synthetic BiLSTM family has three seeds.",
+    "Inactive training checkpoints and historical results are retained outside the active remote catalog.",
+    "Domain12 adds 12 completed semantic-corrected E49 experiments. U98 reserves unsupported body-leg; U97 excludes it; Utop25 is S50+25 emergency labels = 74 glosses.",
+    "The previous 20 remain selectable via native20. Domain12 has a different emergency Test scope (E49 / 315 clips), so scores must not be pooled with prior E50 / 335 clips."
+  ],
+  "previous_default": "u98-md-bilstm-wordx4-seed2026",
+  "domain12": [
+    {
+      "id": "domain-u98-bilstm-paired-real-s00-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m2-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m4-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m5-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-dwpose-m5-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u97-bilstm-paired-m5-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-utop25-bilstm-paired-m5-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-tcn-paired-m5-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m5-s05-w30-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m4-s10-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m4-s10-w20-seed123",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m4-s10-w20-seed2026",
+      "campaign": "runs"
+    }
+  ],
+  "remote_extractors": [
+    "mediapipe",
+    "dwpose",
+    "hybrid",
+    "rtmw"
+  ],
+  "remote_extractor_calibration_policy": {
+    "mediapipe": "original_REAL06_profile",
+    "dwpose": "original_REAL06_profile",
+    "hybrid": "uncalibrated_extractor",
+    "rtmw": "uncalibrated_extractor"
+  }
+}
