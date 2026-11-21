@@ -107,12 +107,65 @@
       "campaign": "priority5h"
     }
   ],
-  "default": "u98-md-bilstm-wordx4-seed2026",
+  "default": "domain-u98-bilstm-paired-m4-s10-w20-seed42",
   "notes": [
     "Previous models output S50 sentence CTC; auxiliary word heads do not extend the predicted Gloss vocabulary.",
     "U98 merges S50 and E50 with two shared labels; 99 CTC outputs include blank.",
     "E50-only control has 50 labels, 51 CTC outputs, and is not a sentence translator.",
     "Combined-keypoint synth10 model has one seed; selected non-synthetic BiLSTM family has three seeds.",
-    "Inactive training checkpoints and historical results are retained outside the active remote catalog."
+    "Inactive training checkpoints and historical results are retained outside the active remote catalog.",
+    "Domain12 adds 12 completed semantic-corrected E49 experiments. U98 reserves unsupported body-leg; U97 excludes it; Utop25 is S50+25 emergency labels = 74 glosses.",
+    "The previous 20 remain selectable via native20. Domain12 has a different emergency Test scope (E49 / 315 clips), so scores must not be pooled with prior E50 / 335 clips."
+  ],
+  "previous_default": "u98-md-bilstm-wordx4-seed2026",
+  "domain12": [
+    {
+      "id": "domain-u98-bilstm-paired-real-s00-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m2-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m4-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m5-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-dwpose-m5-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u97-bilstm-paired-m5-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-utop25-bilstm-paired-m5-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-tcn-paired-m5-s05-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m5-s05-w30-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m4-s10-w20-seed42",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m4-s10-w20-seed123",
+      "campaign": "runs"
+    },
+    {
+      "id": "domain-u98-bilstm-paired-m4-s10-w20-seed2026",
+      "campaign": "runs"
+    }
   ]
 }

@@ -14,7 +14,7 @@ from remote_client import safe_extract, sha256, run_job, ConfirmHostKey,valid_mo
 
 class TransportTests(unittest.TestCase):
     def test_catalog_ids_and_aliases_accept_no_paths_or_shell_commands(self):
-        self.assertTrue(valid_model_ids(['old10','new10','native20','u98-md-bilstm-wordx4-seed2026']))
+        self.assertTrue(valid_model_ids(['old10','new10','native20','domain12','native32','domain-u98-bilstm-paired-m4-s10-w20-seed42']))
         for values in ([],['../a'],['/tmp/model'],['tcn;id'],['$(id)'],['a']*101):
             self.assertFalse(valid_model_ids(values))
     def archive(self, root, names):
