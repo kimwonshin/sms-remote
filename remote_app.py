@@ -68,7 +68,7 @@ class App:
         choices = ttk.LabelFrame(pane, text="3. 서버에서 실행할 분석", padding=10)
         choices.pack(fill="x")
         self.extractors, self.models = {}, {}
-        labels = dict(dwpose="DWPose-L", hybrid="hybrid", rtmw="RTMW-x 384", mediapipe="MediaPipe (CPU)",
+        labels = dict(dwpose="DWPose-L", hybrid="hybrid (미보정)", rtmw="RTMW-x 384 (미보정)", mediapipe="MediaPipe (CPU)",
                       **{"rtmw-hand": "RTMW + Hand", "rtmdet-hand": "RTMDet-Hand"})
         for i, name in enumerate(EXTRACTORS):
             value = tk.BooleanVar(value=name == "mediapipe")
@@ -85,7 +85,7 @@ class App:
         scroll.pack(side='right',fill='y');self.model_list.configure(yscrollcommand=scroll.set)
         self.catalog_ids=[]
         self.model_list.bind('<<ListboxSelect>>',lambda event:self.model_group.set('목록에서 직접 선택') if self.model_list.curselection() else None)
-        ttk.Label(choices,text='32개 모델은 MediaPipe·DWPose 직접 15fps 입력입니다. 어휘 수·미학습 라벨·응급 전용 조건을 구분하세요.').grid(row=4,column=0,columnspan=3,sticky='w',padx=8)
+        ttk.Label(choices,text='직접15fps: MediaPipe·DWPose·hybrid·RTMW-x 384. hybrid/RTMW는 Gloss 비교용이며 confidence·질문은 미보정입니다.',wraplength=760,justify='left').grid(row=4,column=0,columnspan=3,sticky='w',padx=8)
         actions = ttk.Frame(pane)
         actions.pack(fill="x", pady=12)
         self.start_button = ttk.Button(actions, text="촬영·전송·분석 시작", command=self.start)

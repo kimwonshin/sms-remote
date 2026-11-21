@@ -4,7 +4,7 @@
 
 이전 **20개를 유지하고 새 결합 학습 12개를 추가**, 총32개를 비교합니다. 기본 선택은 **M4 결합10% · 실제 응급 단어20% · 통합98라벨 BiLSTM seed42**입니다. 새 최상위 조건은 seed3개로 확인했습니다.
 
-GUI에서 `추천 결합 BiLSTM`, `새 결합 12개`, `이전 통합10개`, `기존 문장10개`, `이전20개`, `전체32개` 또는 서버 목록의 개별 ID를 선택합니다. 모든 활성 모델은 MediaPipe 또는 DWPose **직접15fps** 입력입니다.
+GUI에서 `추천 결합 BiLSTM`, `새 결합 12개`, `이전 통합10개`, `기존 문장10개`, `이전20개`, `전체32개` 또는 서버 목록의 개별 ID를 선택합니다. 모든 활성 모델은 네 추출기의 직접15fps 입력을 받습니다. hybrid/RTMW는 미보정 비교용입니다.
 
 ```bash
 python remote_client.py --list-models --password
@@ -23,6 +23,23 @@ python remote_client.py --video sentence.mp4 --extractors mediapipe --models rel
 클라이언트와 sms-my 서버를 함께 업데이트하세요. 기존 client-config.json·SSH 키·촬영본·반환 결과는 유지하며, 노트북에 가중치를 받지 않습니다. 실제 모델 목록은 서버 `--list-models` 응답이 기준입니다.
 
 반환 보고서는 순서 있는 Gloss, confidence, 질문 여부, 입력 프레임 수, 어휘 범위와 미학습 라벨을 제공합니다. 정답 없는 촬영 영상의 정확도를 만들지 않습니다. REAL06 confidence 보정이 전시장 카메라 환경에서도 검증된 확률을 뜻하지는 않습니다.
+
+
+## 네 추출기 비교
+
+GUI에서 **MediaPipe / DWPose-L / hybrid / RTMW-x 384**를 선택할 수 있습니다. CLI ID는 `mediapipe dwpose hybrid rtmw`입니다. RTMW는 로컬에 고정된 **RTMW-x 384×288** 가중치이고, hybrid는 **RTMW-x + 손 확대 재추정 + MediaPipe 누락 보완**입니다.
+
+```bash
+python remote_client.py --video sentence.mp4 --extractors mediapipe dwpose hybrid rtmw --models release --password --open-report
+python remote_client.py --video sentence.mp4 --extractors hybrid rtmw --models domain12 --password --open-report
+python remote_client.py --video sentence.mp4 --extractors mediapipe dwpose hybrid rtmw --models all --password --open-report
+```
+
+32개 모델 모두 동일 원본에서 직접15fps로 추출한 canonical74 → 465특징을 받습니다. 같은 추출기의 특징은 선택한 모델들에 공유합니다. 추출 영상·좌표·특징은 `mediapipe-15fps/`, `dwpose-15fps/`, `hybrid-15fps/`, `rtmw-15fps/`로 분리합니다. RTMW/DWPose의 ONNX와 인식 모델은 CUDA, hybrid의 RTMW/손 ONNX는 CUDA 및 MediaPipe 보완은 CPU에서 실행합니다.
+
+**hybrid·RTMW는 새 입력 출처의 비교 실험**입니다. 현재32개 모델의 학습·REAL06 보정은 MediaPipe/DWPose 기준입니다. 두 새 출처에서 Gloss 배열과 raw_score를 출력하지만 confidence·토큰 confidence·질문 확률·is_question은 null, 상태는 `needs_review`/`uncalibrated_extractor`로 표시합니다. 입력 품질이 나쁘면 기존 `invalid_input`을 보존합니다. 다른 추출기의 보정 계수를 이름만 바꿔 재사용하지 않으며, 모델별 신규 profile에 보정 계수나 임계값을 넣지 않습니다.
+
+기존 checkpoint와 MediaPipe/DWPose profile은 그대로 보존합니다. 기존 benchmark.csv 점수는 MediaPipe/DWPose만의 Test 결과이며, 새 두 출처의 정확도를 나타내지 않습니다. 새 추출기용 독립 보정·정확도 평가를 하기 전까지 전시장 성능 향상을 가정하지 않습니다.
 
 노트북에서는 **웹캠 녹화와 영상 전송만** 합니다. GPU 컴퓨터에서 키포인트와 문장 모델을 실행하고, 비교 보고서·결과 영상·좌표·예측 JSON을 다시 노트북에 저장합니다. 노트북에 Torch·MediaPipe·가중치를 설치할 필요가 없습니다.
 
@@ -48,7 +65,7 @@ ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub -E sha256
 
 30fps, 640×480을 요청하며 최대 60초를 촬영합니다. 실제 수집 속도가 27fps 미만이면 분석을 중단하고 촬영 원본은 보존합니다. 화면 미리보기만 좌우 반전하며 서버 입력 영상은 반전하지 않습니다. `r`은 다시 촬영, `q`/ESC는 취소입니다. 미리 녹화한 MP4·AVI 파일도 선택할 수 있습니다. 영상 한 개를 문장 하나로 처리합니다.
 
-기본 분석은 MediaPipe 직접15fps + 새 M4 결합10% 통합98라벨 BiLSTM입니다. 활성32개는 MediaPipe·DWPose로 비교합니다. RTMW·hybrid·30fps는 현재 모델 목록의 입력 계약에 포함되지 않습니다. **MediaPipe 키포인트 추출은 서버 CPU**, 나머지 ONNX 추출과 모든 문장 모델 추론은 서버 GPU를 사용합니다.
+기본 분석은 MediaPipe 직접15fps + 새 M4 결합10% 통합98라벨 BiLSTM입니다. 활성32개는 MediaPipe·DWPose·hybrid·RTMW-x384로 비교합니다. 네 출처는 직접15fps 입력이며 hybrid/RTMW는 별도 미보정 상태로 표시합니다. **MediaPipe 키포인트 추출은 서버 CPU**, 나머지 ONNX 추출과 모든 문장 모델 추론은 서버 GPU를 사용합니다.
 
 모델 결과는 순서가 있는 gloss와 confidence·질문 판별입니다. 별도의 자연어 문장 생성은 하지 않습니다. 정답 없이 측정한 손 검출률은 인식 정확도가 아니며, confidence 보정과 입력 도메인의 검토 상태는 보고서에 그대로 표시됩니다.
 
@@ -91,3 +108,7 @@ SSH 개인키를 사용하면 `--password`를 생략합니다. 암호화된 개�
 ## 32개 구성 확인 — 2026-11-21
 
 서버10개·클라이언트7개 테스트와 실제 영상의 두 추출기×32개 모델, 총64개 CUDA 예측·보고서 ZIP 생성 검증을 통과했습니다. 서버 처리23.055초이며 네트워크 전송과 촬영은 제외합니다. 이전20개 checkpoint/profile 해시는 그대로 보존됐고, CTC75/98/99출력 및 미학습 다리 표시를 확인했습니다. 상세 기록은 [validation-catalog32.json](validation-catalog32.json)입니다.
+
+## 네 추출기 실행 확인 — 2026-11-21
+
+실제 REAL17 영상 한 편을 네 출처에서 직접15fps 55프레임으로 추출하고, 32개 모델의 총128개 CUDA 예측과 보고서 ZIP 검증을 통과했습니다. 모든 출처의 표본 시각·원본 프레임 번호가 같고 canonical74/465특징을 확인했습니다. RTMW ONNX 입력은 [batch,3,384,288]입니다. 기존64개 MP/DW profile 해시는 보존했고 새64개 profile은 미보정으로 생성했습니다. 서버 처리57.115초이며 네트워크 전송·촬영 시간은 제외합니다. [validation-extractors4.json](validation-extractors4.json)에 기록했습니다. 단위 검증은 서버13개·클라이언트7개를 통과했습니다.

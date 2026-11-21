@@ -167,5 +167,17 @@
       "id": "domain-u98-bilstm-paired-m4-s10-w20-seed2026",
       "campaign": "runs"
     }
-  ]
+  ],
+  "remote_extractors": [
+    "mediapipe",
+    "dwpose",
+    "hybrid",
+    "rtmw"
+  ],
+  "remote_extractor_calibration_policy": {
+    "mediapipe": "original_REAL06_profile",
+    "dwpose": "original_REAL06_profile",
+    "hybrid": "uncalibrated_extractor",
+    "rtmw": "uncalibrated_extractor"
+  }
 }

@@ -19,7 +19,7 @@ import zipfile
 import paramiko
 
 ROOT = Path(__file__).resolve().parent
-EXTRACTORS = ("mediapipe", "dwpose")
+EXTRACTORS = ("mediapipe", "dwpose", "hybrid", "rtmw")
 MODEL_PRESETS = ('old10','new10','native20','domain12','native32','all','release')
 
 

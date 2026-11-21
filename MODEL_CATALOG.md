@@ -56,3 +56,20 @@
 기존 후보의 p95는 이번 등록에서 재측정하지 않아 not_remeasured다. 새 모델의 p95는 특징 입력 이후 모델·CTC decode이며 영상 추출·전송·LLM/TTS를 포함하지 않는다. Confidence는 REAL06 보정이고 전시장 다인 환경과 자연스러운 응급 연속 문장 정확도는 별도 검증 대상이다.
 
 새 결합 방식 비교는 동일한654개 원본·각도 표본/225그룹을 사용했다. M2/M4/M5와 합성5%/10%, 실제 단어20%/30%, DW단독/혼합, U98/U97/U74 및 TCN/BiLSTM 조합을 포함한다. 모든 실제 후보는 고정16epoch를 완료했다. 합성 자연스러움의 사람 검수는 pending인 실험 자료다.
+
+
+## 입력 출처 추가 — 2026-11-21
+
+GUI에서 **MediaPipe / DWPose-L / hybrid / RTMW-x 384**를 선택할 수 있습니다. CLI ID는 `mediapipe dwpose hybrid rtmw`입니다. RTMW는 로컬에 고정된 **RTMW-x 384×288** 가중치이고, hybrid는 **RTMW-x + 손 확대 재추정 + MediaPipe 누락 보완**입니다.
+
+```bash
+python remote_client.py --video sentence.mp4 --extractors mediapipe dwpose hybrid rtmw --models release --password --open-report
+python remote_client.py --video sentence.mp4 --extractors hybrid rtmw --models domain12 --password --open-report
+python remote_client.py --video sentence.mp4 --extractors mediapipe dwpose hybrid rtmw --models all --password --open-report
+```
+
+32개 모델 모두 동일 원본에서 직접15fps로 추출한 canonical74 → 465특징을 받습니다. 같은 추출기의 특징은 선택한 모델들에 공유합니다. 추출 영상·좌표·특징은 `mediapipe-15fps/`, `dwpose-15fps/`, `hybrid-15fps/`, `rtmw-15fps/`로 분리합니다. RTMW/DWPose의 ONNX와 인식 모델은 CUDA, hybrid의 RTMW/손 ONNX는 CUDA 및 MediaPipe 보완은 CPU에서 실행합니다.
+
+**hybrid·RTMW는 새 입력 출처의 비교 실험**입니다. 현재32개 모델의 학습·REAL06 보정은 MediaPipe/DWPose 기준입니다. 두 새 출처에서 Gloss 배열과 raw_score를 출력하지만 confidence·토큰 confidence·질문 확률·is_question은 null, 상태는 `needs_review`/`uncalibrated_extractor`로 표시합니다. 입력 품질이 나쁘면 기존 `invalid_input`을 보존합니다. 다른 추출기의 보정 계수를 이름만 바꿔 재사용하지 않으며, 모델별 신규 profile에 보정 계수나 임계값을 넣지 않습니다.
+
+기존 checkpoint와 MediaPipe/DWPose profile은 그대로 보존합니다. 기존 benchmark.csv 점수는 MediaPipe/DWPose만의 Test 결과이며, 새 두 출처의 정확도를 나타내지 않습니다. 새 추출기용 독립 보정·정확도 평가를 하기 전까지 전시장 성능 향상을 가정하지 않습니다.
