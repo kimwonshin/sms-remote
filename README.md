@@ -4,7 +4,7 @@
 
 이전 **20개를 유지하고 새 결합 학습 12개를 추가**, 총32개를 비교합니다. 기본 선택은 **M4 결합10% · 실제 응급 단어20% · 통합98라벨 BiLSTM seed42**입니다. 새 최상위 조건은 seed3개로 확인했습니다.
 
-GUI에서 `추천 결합 BiLSTM`, `새 결합 12개`, `이전 통합10개`, `기존 문장10개`, `이전20개`, `전체32개` 또는 서버 목록의 개별 ID를 선택합니다. 모든 활성 모델은 네 추출기의 직접15fps 입력을 받습니다. hybrid/RTMW는 미보정 비교용입니다.
+GUI에서 `추천 결합 BiLSTM`, `새 결합 12개`, `이전 통합10개`, `기존 문장10개`, `이전20개`, `전체 모델` 또는 서버 목록의 개별 ID를 선택합니다. 모든 활성 모델은 네 추출기의 직접15fps 입력을 받습니다. hybrid/RTMW는 미보정 비교용입니다.
 
 ```bash
 python remote_client.py --list-models --password
@@ -112,3 +112,13 @@ SSH 개인키를 사용하면 `--password`를 생략합니다. 암호화된 개�
 ## 네 추출기 실행 확인 — 2026-11-21
 
 실제 REAL17 영상 한 편을 네 출처에서 직접15fps 55프레임으로 추출하고, 32개 모델의 총128개 CUDA 예측과 보고서 ZIP 검증을 통과했습니다. 모든 출처의 표본 시각·원본 프레임 번호가 같고 canonical74/465특징을 확인했습니다. RTMW ONNX 입력은 [batch,3,384,288]입니다. 기존64개 MP/DW profile 해시는 보존했고 새64개 profile은 미보정으로 생성했습니다. 서버 처리57.115초이며 네트워크 전송·촬영 시간은 제외합니다. [validation-extractors4.json](validation-extractors4.json)에 기록했습니다. 단위 검증은 서버13개·클라이언트7개를 통과했습니다.
+
+## 차렷·새 순서 학습 후보
+
+`standing`은 차렷 복원과 새 결합 순서를 사용한 완료 모델 전체, `standing-candidate`는 검증 기준의 잠정 후보입니다. 기존 `native32`와 `release`는 기존 모델을 유지합니다. `all`은 등록된 전체를 포함합니다. 이 모델들은 같은 U98(98글로스+blank) CTC로 문장과 응급 단어를 출력합니다. C2의 공유 보조 CTC는 학습에만 사용하며 별도 출력 헤드가 없습니다.
+
+합성 diagnostic-dev/test는 Train 원본 조각을 재사용한 순서 검사입니다. 새 실제 카메라 검증이 없으므로 전시장 성능 개선으로 해석하지 마세요. 학습·Test·seed·보존 가드 및 한계는 [standing_and_data_benchmarking.md](standing_and_data_benchmarking.md), 완료 목록은 `standing_model_selection.json`, 결과는 `standing_benchmark.csv`를 참고하세요. 가중치는 서버의 완료 학습 디렉터리에 보존하며 Git에 넣지 않습니다.
+
+```bash
+python remote_client.py --video sentence.mp4 --extractors mediapipe dwpose --models standing --password --open-report
+```

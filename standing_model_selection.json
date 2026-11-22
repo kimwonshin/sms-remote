@@ -1,0 +1,97 @@
+{
+  "schema": "sms-standing-selection-v1",
+  "models": [
+    {
+      "id": "standing-data-s0-bilstm-s10-fullctc-u98-seed42",
+      "checkpoint_sha256": "58c56682c6264af63501de970b12994eb40be83b5a6c17fa0f1502671e0595f8",
+      "best_epoch": 10,
+      "guard_pass": true,
+      "architecture": "bilstm",
+      "seed": 42,
+      "dataset_config": "S0",
+      "synthetic_fraction": 0.1,
+      "auxiliary_ctc": false
+    },
+    {
+      "id": "standing-data-c0-bilstm-s10-fullctc-u98-seed42",
+      "checkpoint_sha256": "6b1a1e10dc5caa9fd4650206f398ac898cfef2230cbe9ed38ddd9e80639c5c5f",
+      "best_epoch": 15,
+      "guard_pass": true,
+      "architecture": "bilstm",
+      "seed": 42,
+      "dataset_config": "C0",
+      "synthetic_fraction": 0.1,
+      "auxiliary_ctc": false
+    },
+    {
+      "id": "standing-data-c1-bilstm-s10-fullctc-u98-seed42",
+      "checkpoint_sha256": "4c190bb009158dc295f930f8decc8a08c46c88f734603467e66de71174b5504c",
+      "best_epoch": 16,
+      "guard_pass": true,
+      "architecture": "bilstm",
+      "seed": 42,
+      "dataset_config": "C1",
+      "synthetic_fraction": 0.1,
+      "auxiliary_ctc": false
+    },
+    {
+      "id": "standing-data-c2-bilstm-s10-localctc-u98-seed42",
+      "checkpoint_sha256": "cbcc8d450d241dc9fc99aa5be38929310561ddb2d16592f6a7b0be83396bcec1",
+      "best_epoch": 15,
+      "guard_pass": true,
+      "architecture": "bilstm",
+      "seed": 42,
+      "dataset_config": "C2",
+      "synthetic_fraction": 0.1,
+      "auxiliary_ctc": true
+    },
+    {
+      "id": "standing-data-c1-tcn-s10-fullctc-u98-seed42",
+      "checkpoint_sha256": "4e4ae40bebfa7b5bd16c69b2079b2e47a5d381b41ddb8a75995d43397c364ac1",
+      "best_epoch": 14,
+      "guard_pass": false,
+      "architecture": "tcn",
+      "seed": 42,
+      "dataset_config": "C1",
+      "synthetic_fraction": 0.1,
+      "auxiliary_ctc": false
+    },
+    {
+      "id": "standing-data-c1-bilstm-s15-fullctc-u98-seed42",
+      "checkpoint_sha256": "152e8f77268bb17d90b1781139edc416f11017dc7ec496ea7c278ea9c38c4062",
+      "best_epoch": 14,
+      "guard_pass": true,
+      "architecture": "bilstm",
+      "seed": 42,
+      "dataset_config": "C1",
+      "synthetic_fraction": 0.15,
+      "auxiliary_ctc": false
+    },
+    {
+      "id": "standing-data-c1-bilstm-s10-fullctc-u98-seed123",
+      "checkpoint_sha256": "8e2462f71723f8f39bb9e927f4a14ba415bcfe1ca84f5b26b01fe2c4a6cc2f28",
+      "best_epoch": 14,
+      "guard_pass": true,
+      "architecture": "bilstm",
+      "seed": 123,
+      "dataset_config": "C1",
+      "synthetic_fraction": 0.1,
+      "auxiliary_ctc": false
+    },
+    {
+      "id": "standing-data-c1-bilstm-s10-fullctc-u98-seed2026",
+      "checkpoint_sha256": "3cb570919dc179a262e9ae36ef80cefc82923943a68020e9d7a8e7f9cb5da39d",
+      "best_epoch": 16,
+      "guard_pass": false,
+      "architecture": "bilstm",
+      "seed": 2026,
+      "dataset_config": "C1",
+      "synthetic_fraction": 0.1,
+      "auxiliary_ctc": false
+    }
+  ],
+  "provisional_recommendation": "standing-data-c1-bilstm-s10-fullctc-u98-seed42",
+  "actual_unseen_camera_validated": false,
+  "default_policy": "keep original release",
+  "selection": "REAL08 per-extractor S50 WER <= C0+0.3pp, then reserved synthetic diagnostic-dev WER; no Test selection"
+}
