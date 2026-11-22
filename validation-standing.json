@@ -1,0 +1,338 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "model": "standing-data-s0-bilstm-s10-fullctc-u98-seed42",
+      "extractor": "mediapipe",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-s0-bilstm-s10-fullctc-u98-seed42",
+      "extractor": "dwpose",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-s0-bilstm-s10-fullctc-u98-seed42",
+      "extractor": "hybrid",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-s0-bilstm-s10-fullctc-u98-seed42",
+      "extractor": "rtmw",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c0-bilstm-s10-fullctc-u98-seed42",
+      "extractor": "mediapipe",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c0-bilstm-s10-fullctc-u98-seed42",
+      "extractor": "dwpose",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c0-bilstm-s10-fullctc-u98-seed42",
+      "extractor": "hybrid",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c0-bilstm-s10-fullctc-u98-seed42",
+      "extractor": "rtmw",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s10-fullctc-u98-seed42",
+      "extractor": "mediapipe",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s10-fullctc-u98-seed42",
+      "extractor": "dwpose",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s10-fullctc-u98-seed42",
+      "extractor": "hybrid",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s10-fullctc-u98-seed42",
+      "extractor": "rtmw",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c2-bilstm-s10-localctc-u98-seed42",
+      "extractor": "mediapipe",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c2-bilstm-s10-localctc-u98-seed42",
+      "extractor": "dwpose",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c2-bilstm-s10-localctc-u98-seed42",
+      "extractor": "hybrid",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c2-bilstm-s10-localctc-u98-seed42",
+      "extractor": "rtmw",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c1-tcn-s10-fullctc-u98-seed42",
+      "extractor": "mediapipe",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c1-tcn-s10-fullctc-u98-seed42",
+      "extractor": "dwpose",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c1-tcn-s10-fullctc-u98-seed42",
+      "extractor": "hybrid",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c1-tcn-s10-fullctc-u98-seed42",
+      "extractor": "rtmw",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s15-fullctc-u98-seed42",
+      "extractor": "mediapipe",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s15-fullctc-u98-seed42",
+      "extractor": "dwpose",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s15-fullctc-u98-seed42",
+      "extractor": "hybrid",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s15-fullctc-u98-seed42",
+      "extractor": "rtmw",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s10-fullctc-u98-seed123",
+      "extractor": "mediapipe",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s10-fullctc-u98-seed123",
+      "extractor": "dwpose",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s10-fullctc-u98-seed123",
+      "extractor": "hybrid",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s10-fullctc-u98-seed123",
+      "extractor": "rtmw",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s10-fullctc-u98-seed2026",
+      "extractor": "mediapipe",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s10-fullctc-u98-seed2026",
+      "extractor": "dwpose",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 24,
+      "sdk_frozen_evaluation_matches": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s10-fullctc-u98-seed2026",
+      "extractor": "hybrid",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "standing-data-c1-bilstm-s10-fullctc-u98-seed2026",
+      "extractor": "rtmw",
+      "strict_checkpoint_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 99,
+      "sdk_frozen_evaluation_samples": 0,
+      "sdk_frozen_evaluation_matches": 0,
+      "calibration": "unfitted"
+    }
+  ],
+  "model_count": 8,
+  "base_models_preserved": 32,
+  "source": "existing AI Hub fixture and deterministic Test evaluator regression, not new camera accuracy",
+  "server_tests": 19,
+  "client_tests": 7,
+  "actual_unseen_camera_validated": false,
+  "runtime_code_sha256": {
+    "extend_registry.py": "3c92a57b9e016aba3c9227d2a8de657b508772498ecf2c77057748d726a37217",
+    "registry.py": "6ddc348839eb5e3a2c00eb99e169b787fbf16ec21f9e413b7f14e29190340b01",
+    "native_runtime.py": "4270a1d7f2951df9541ea437b54aaa9ea36d0af20faefa68eda6236510761f57",
+    "native_quality.py": "91523dfd12f1c68fd5381ce59bde10c73f4e8e8a40d17d3cd9479b6cf66e5a5f"
+  },
+  "quality_input_policy": "detector-score-times-observation-mask-mean-v1"
+}

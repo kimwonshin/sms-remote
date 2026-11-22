@@ -1,0 +1,124 @@
+{
+  "date": "2026-11-21",
+  "models": 32,
+  "predictions": 128,
+  "extractors": {
+    "mediapipe": {
+      "predictions": 32,
+      "frames": 55,
+      "feature_shape": [
+        55,
+        465
+      ],
+      "device": "cpu",
+      "variant": "mediapipe",
+      "pose_runtime": {},
+      "default_glosses": [
+        "여기"
+      ],
+      "default_calibration": "calibrated_native15"
+    },
+    "dwpose": {
+      "predictions": 32,
+      "frames": 55,
+      "feature_shape": [
+        55,
+        465
+      ],
+      "device": "cuda",
+      "variant": "dwpose",
+      "pose_runtime": {
+        "onnx_input_shape": [
+          "batch",
+          3,
+          384,
+          288
+        ],
+        "onnx_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "configured_pose_input_wh": [
+          288,
+          384
+        ]
+      },
+      "default_glosses": [
+        "여기"
+      ],
+      "default_calibration": "calibrated_native15"
+    },
+    "hybrid": {
+      "predictions": 32,
+      "frames": 55,
+      "feature_shape": [
+        55,
+        465
+      ],
+      "device": "cuda+cpu",
+      "variant": "rtmw-x-384x288+hand+mediapipe",
+      "pose_runtime": {
+        "onnx_input_shape": [
+          "batch",
+          3,
+          384,
+          288
+        ],
+        "onnx_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "configured_pose_input_wh": [
+          288,
+          384
+        ]
+      },
+      "default_glosses": [
+        "여기"
+      ],
+      "default_calibration": "uncalibrated_extractor"
+    },
+    "rtmw": {
+      "predictions": 32,
+      "frames": 55,
+      "feature_shape": [
+        55,
+        465
+      ],
+      "device": "cuda",
+      "variant": "rtmw-x-384x288",
+      "pose_runtime": {
+        "onnx_input_shape": [
+          "batch",
+          3,
+          384,
+          288
+        ],
+        "onnx_providers": [
+          "CUDAExecutionProvider",
+          "CPUExecutionProvider"
+        ],
+        "configured_pose_input_wh": [
+          288,
+          384
+        ]
+      },
+      "default_glosses": [
+        "여기"
+      ],
+      "default_calibration": "uncalibrated_extractor"
+    }
+  },
+  "server_processing_seconds": 57.115,
+  "original_checkpoints_and_MP_DW_profile_hashes_unchanged": true,
+  "generated_unfitted_profiles": 64,
+  "new_extractor_probability_fields_are_null": true,
+  "direct15fps_sampler_and_timestamps_match": true,
+  "strict_checkpoint_load": true,
+  "zip_sha_and_crc_verified": true,
+  "unit_tests": {
+    "server": 13,
+    "client": 7
+  },
+  "scope": "Execution and data-contract smoke test on one existing REAL17 video; not an accuracy, crowd or external-laptop network benchmark."
+}
