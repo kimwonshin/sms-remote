@@ -122,3 +122,8 @@ SSH 개인키를 사용하면 `--password`를 생략합니다. 암호화된 개�
 ```bash
 python remote_client.py --video sentence.mp4 --extractors mediapipe dwpose --models standing --password --open-report
 ```
+
+
+## RTMW 포함 학습 후보
+
+[RTMW_TRAINING.md](RTMW_TRAINING.md)에 새 E49 단일 CTC 후보의 조건·진행 상태·보정 정책을 기록합니다. 완료 후 `rtmw-candidates`/`rtmw-candidate` 프리셋으로 비교하며 기존 `release`를 유지합니다.

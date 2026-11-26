@@ -11,7 +11,7 @@ import webbrowser
 
 from remote_client import ROOT, EXTRACTORS, load_config, run_job, save_json, Connection
 
-PRESETS={'차렷·새순서 후보 전체':('standing',),'차렷·새순서 잠정 후보':('standing-candidate',),'추천 결합 BiLSTM (98라벨)':('release',),'새 결합 12개 (98·97·74)':('domain12',),
+PRESETS={'RTMW 포함 새 학습 후보':('rtmw-candidates',),'RTMW 포함 잠정 후보':('rtmw-candidate',),'차렷·새순서 후보 전체':('standing',),'차렷·새순서 잠정 후보':('standing-candidate',),'추천 결합 BiLSTM (98라벨)':('release',),'새 결합 12개 (98·97·74)':('domain12',),
          '이전 통합 10개':('new10',),'기존 문장 10개':('old10',),'이전 20개':('native20',),
          '전체 모델':('all',),'목록에서 직접 선택':()}
 
