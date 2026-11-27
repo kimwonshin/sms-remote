@@ -1,6 +1,6 @@
 # RTMW 포함 E49 단일 CTC 학습 후보
 
-현재 새 후보 학습이 진행 중입니다. 완료 결과는 `rtmw_training_benchmarking.md`와 `rtmw_benchmark.csv`, `rtmw_metrics.json`, `rtmw_experiments.json`, `rtmw_model_selection.json`, `validation-rtmw.json`에 추가합니다. 진행 중 모델은 원격 목록에 등록하지 않습니다.
+새 후보 학습·벤치마크가 완료되었습니다. 실측 결과는 `rtmw_training_benchmarking.md`와 `rtmw_benchmark.csv`, `rtmw_metrics.json`, `rtmw_experiments.json`, `rtmw_model_selection.json`, `validation-rtmw.json`에서 확인합니다. 완료·검증된 모델만 원격 목록에 등록합니다.
 
 응급 E49는 모든 후보에 포함합니다. 신체 **다리**는 유효한 양성 영상이 없어 미학습이며 WORD1599(교량)는 사용하지 않습니다. 전체 어휘는 유효한 S50∪E49=97글로스, 축소 조건은 E49+문장 전용25글로스=74글로스입니다. 출력은 공통 lexical CTC 하나이며 문장/단어별 별도 분류가 아닙니다.
 
