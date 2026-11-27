@@ -20,7 +20,7 @@ import paramiko
 
 ROOT = Path(__file__).resolve().parent
 EXTRACTORS = ("mediapipe", "dwpose", "hybrid", "rtmw")
-MODEL_PRESETS = ('old10','new10','native20','domain12','native32','standing','standing-candidate','all','release')
+MODEL_PRESETS = ('old10','new10','native20','domain12','native32','standing','standing-candidate','rtmw-candidates','rtmw-candidate','all','release')
 
 
 def valid_model_ids(values):
@@ -284,7 +284,7 @@ def main():
     source.add_argument("--camera", type=int)
     source.add_argument("--resume", type=Path)
     parser.add_argument("--extractors", nargs="+", choices=EXTRACTORS, default=["mediapipe"])
-    parser.add_argument("--models", nargs="+", default=["release"], help='Model IDs or old10/new10/native20/domain12/native32/standing/standing-candidate/all/release')
+    parser.add_argument("--models", nargs="+", default=["release"], help='Model IDs or old10/new10/native20/domain12/native32/standing/standing-candidate/rtmw-candidates/rtmw-candidate/all/release')
     source.add_argument('--list-models',action='store_true',help='Fetch the server model catalog without submitting video')
     parser.add_argument("--password", action="store_true", help="SSH 비밀번호를 저장하지 않고 입력")
     parser.add_argument("--open-report", action="store_true")

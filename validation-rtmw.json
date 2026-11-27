@@ -1,0 +1,300 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "model": "rtmw-data-r0-bilstm-u97-seed42",
+      "input_source": "mediapipe",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r0-bilstm-u97-seed42",
+      "input_source": "dwpose",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r0-bilstm-u97-seed42",
+      "input_source": "rtmw",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r0-bilstm-u97-seed42",
+      "input_source": "hybrid",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "rtmw-data-r1-bilstm-u97-seed42",
+      "input_source": "mediapipe",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r1-bilstm-u97-seed42",
+      "input_source": "dwpose",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r1-bilstm-u97-seed42",
+      "input_source": "rtmw",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r1-bilstm-u97-seed42",
+      "input_source": "hybrid",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "rtmw-data-r2-bilstm-u97-seed42",
+      "input_source": "mediapipe",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r2-bilstm-u97-seed42",
+      "input_source": "dwpose",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r2-bilstm-u97-seed42",
+      "input_source": "rtmw",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r2-bilstm-u97-seed42",
+      "input_source": "hybrid",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "rtmw-data-r3-bilstm-u97-seed42",
+      "input_source": "mediapipe",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r3-bilstm-u97-seed42",
+      "input_source": "dwpose",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r3-bilstm-u97-seed42",
+      "input_source": "rtmw",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r3-bilstm-u97-seed42",
+      "input_source": "hybrid",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "rtmw-data-r4-bilstm-u74-seed42",
+      "input_source": "mediapipe",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 75,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r4-bilstm-u74-seed42",
+      "input_source": "dwpose",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 75,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r4-bilstm-u74-seed42",
+      "input_source": "rtmw",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 75,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r4-bilstm-u74-seed42",
+      "input_source": "hybrid",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 75,
+      "sdk_frozen_evaluation_samples": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "rtmw-data-r5-tcn-u97-seed42",
+      "input_source": "mediapipe",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r5-tcn-u97-seed42",
+      "input_source": "dwpose",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r5-tcn-u97-seed42",
+      "input_source": "rtmw",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r5-tcn-u97-seed42",
+      "input_source": "hybrid",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "rtmw-data-r3-bilstm-u97-seed123",
+      "input_source": "mediapipe",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r3-bilstm-u97-seed123",
+      "input_source": "dwpose",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r3-bilstm-u97-seed123",
+      "input_source": "rtmw",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r3-bilstm-u97-seed123",
+      "input_source": "hybrid",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 0,
+      "calibration": "unfitted"
+    },
+    {
+      "model": "rtmw-data-r3-bilstm-u97-seed2026",
+      "input_source": "mediapipe",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r3-bilstm-u97-seed2026",
+      "input_source": "dwpose",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r3-bilstm-u97-seed2026",
+      "input_source": "rtmw",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 24,
+      "calibration": "own_REAL06"
+    },
+    {
+      "model": "rtmw-data-r3-bilstm-u97-seed2026",
+      "input_source": "hybrid",
+      "strict_load": true,
+      "gloss_array": true,
+      "ctc_outputs": 98,
+      "sdk_frozen_evaluation_samples": 0,
+      "calibration": "unfitted"
+    }
+  ],
+  "model_count": 8,
+  "original_records_preserved": 40,
+  "actual_unseen_camera_validated": false,
+  "fixture": "existing AIHub video and frozen Test regressions; no new camera accuracy",
+  "quality_policy": "mean(clip(detector_score,0,1)*mask)",
+  "server_tests": 26,
+  "client_tests": 7
+}
